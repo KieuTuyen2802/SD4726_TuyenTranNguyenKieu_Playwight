@@ -54,20 +54,21 @@ export class Profile {
 
   }
 
-   async expectBookNotPresent(bookTitle1: string) {
-      // Check if the specific book title exists
-      const bookLocator = this.page.locator(`//div[@class='rt-tr-group']//a[text()='${bookTitle1}']`);
-      if (await bookLocator.count() > 0) {
+    async verifyBookDisplayed(bookTitle: string, isDisplayed: boolean) {
+      const bookLocator = this.page.locator(`//div[@class='rt-tr-group']//a[text()='${bookTitle}']`);
+      if(isDisplayed){
+        // Check if the specific book title exists
+        if (await bookLocator.count() > 0) {
         console.log(bookLocator.count());
-        console.log(`⚠️ The book "${bookTitle1}" is available.`);
+        console.log(`⚠️ The book "${bookTitle}" is available.`);
         await expect(bookLocator).toBeVisible();
-      }
-      //Check if the specific book title does not exist
-      else
-         {
-        console.log(`✅The "${bookTitle1}" is not listed.`);
         }
-    }
+      }
+      else {
+        console.log(`✅The "${bookTitle}" is not listed.`);
+        await expect(bookLocator).not.toBeVisible();
+      }
+  }
 }
 
 

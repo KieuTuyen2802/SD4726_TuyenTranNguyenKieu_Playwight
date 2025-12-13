@@ -29,5 +29,5 @@ test('The boos is deleted successfully', async ({ page }) => {
     await page.waitForTimeout(2000);
     //And the book is not show
     const bookTitle = 'Learning JavaScript Design Patterns';
-    await profile.expectBookNotPresent(bookTitle);
+    await profile.verifyBookDisplayed(bookTitle, true);
 });  
