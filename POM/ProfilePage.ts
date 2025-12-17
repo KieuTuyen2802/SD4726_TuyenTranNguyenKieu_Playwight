@@ -38,8 +38,7 @@ export class Profile {
 
   }
 
-  async triggerAlertAndAccept(expectedMessage: string) : Promise<void>
-   {
+  async triggerAlertAndAccept(expectedMessage: string): Promise<void> {
     // Register the dialog handler BEFORE the action that causes the dialog
     this.page.on('dialog', async dialog => {
       // Assert the dialog message (optional, but good practice for verification)
@@ -51,25 +50,18 @@ export class Profile {
     await this.alertButton.click();
     // Ensure the handler is called and the action completes
     // Playwright automatically waits for the dialog to be handled
-
   }
 
-    async verifyBookDisplayed(bookTitle: string, isDisplayed: boolean) {
-      const bookLocator = this.page.locator(`//div[@class='rt-tr-group']//a[text()='${bookTitle}']`);
-      if(isDisplayed){
-        // Check if the specific book title exists
-        if (await bookLocator.count() > 0) {
-        console.log(bookLocator.count());
-        console.log(`⚠️ The book "${bookTitle}" is available.`);
-        await expect(bookLocator).toBeVisible();
-        }
-      }
-      else {
-        console.log(`✅The "${bookTitle}" is not listed.`);
-        await expect(bookLocator).not.toBeVisible();
-      }
+  async verifyBookDisplayed(bookTitle: string, isDisplayed: boolean) {
+    const bookLocator = this.page.locator(`//div[@class='rt-tr-group']//a[text()='${bookTitle}']`);
+    if (isDisplayed) {
+      // Check if the specific book title exists
+      console.log(`⚠️ The book "${bookTitle}" is available.`);
+      await expect(bookLocator).toBeVisible();
+    }
+    else {
+      console.log(`✅ The "${bookTitle}" is not listed.`);
+      await expect(bookLocator).not.toBeVisible();
+    }
   }
 }
-
-
-
